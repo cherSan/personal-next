@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import {FC, ReactNode} from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,18 +18,32 @@ export const metadata: Metadata = {
   description: "Aleksandr Chernushevich",
 };
 
-export default function RootLayout({
+type Props = {
+  children: ReactNode;
+  private_header: ReactNode;
+  public_header: ReactNode;
+};
+
+const Root: FC<Props> = ({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+                  private_header,
+                  public_header
+}) => {
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+      <header>
+          {private_header}
+          {public_header}
+      </header>
         {children}
       </body>
     </html>
   );
 }
+
+Root.displayName = "Root";
+
+export default Root;
